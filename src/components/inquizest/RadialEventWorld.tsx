@@ -219,7 +219,6 @@ function EventComposition({ event }: { event: EventEntry }) {
       <Prop
         kind={event.prop}
         className="pointer-events-none absolute -right-[14%] -top-[26%] w-[52%] text-paper/30"
-        style={undefined as never}
       />
       <div className="relative">
         <div className="flex items-end gap-4">
