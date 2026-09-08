@@ -32,34 +32,85 @@ jobs:
       - name: Build
         run: bun run build
 
-      - name: Inspect build output
+      - name: Prepare GitHub Pages site
+        shell: bash
         run: |
-          echo "================================"
-          echo "ROOT DIRECTORY"
-          echo "================================"
-          ls -la
+          set -e
+
+          echo "Searching for browser output..."
+
+          rm -rf site
+          mkdir -p site
+
+          # Look for the normal Vite/TanStack output first.
+          if [ -d "dist" ]; then
+            echo "Found dist/"
+            cp -R dist/. site/
+          elif [ -d ".output/public" ]; then
+            echo "Found .output/public/"
+            cp -R .output/public/. site/
+          else
+            echo "No standard output directory found."
+            echo ""
+            echo "Searching for index.html and _shell.html..."
+            
+            FOUND_FILE=""
+
+            FOUND_FILE=$(find . \
+              -type f \
+              \( -name "index.html" -o -name "_shell.html" \) \
+              -not -path "./node_modules/*" \
+              -not -path "./.git/*" \
+              | head -n 1)
+
+            if [ -z "$FOUND_FILE" ]; then
+              echo "ERROR: Could not find a browser entry file."
+              echo ""
+              echo "Build directory contents:"
+              find . -maxdepth 4 -type f \
+                -not -path "./node_modules/*" \
+                -not -path "./.git/*" \
+                | head -n 300
+              exit 1
+            fi
+
+            echo "Found: $FOUND_FILE"
+
+            FOUND_DIR=$(dirname "$FOUND_FILE")
+            cp -R "$FOUND_DIR"/. site/
+          fi
+
+          # TanStack Start SPA builds can use _shell.html.
+          # GitHub Pages needs index.html as the entry point.
+          if [ ! -f "site/index.html" ] && [ -f "site/_shell.html" ]; then
+            echo "Creating index.html from _shell.html"
+            cp site/_shell.html site/index.html
+          fi
+
+          # GitHub Pages SPA fallback.
+          if [ -f "site/index.html" ]; then
+            cp site/index.html site/404.html
+          fi
 
           echo ""
           echo "================================"
-          echo "DIST DIRECTORY"
+          echo "FINAL SITE CONTENT"
           echo "================================"
-          ls -la dist || true
+          find site -maxdepth 3 -type f -print | head -n 300
 
           echo ""
           echo "================================"
-          echo "BUILD DIRECTORIES"
+          echo "SITE SIZE"
           echo "================================"
-          find . -maxdepth 4 -type d \( \
-            -name "dist" -o \
-            -name "build" -o \
-            -name "client" \
-          \) -print
+          du -sh site
+
+          if [ ! -f "site/index.html" ]; then
+            echo "ERROR: site/index.html was not created."
+            exit 1
+          fi
 
           echo ""
-          echo "================================"
-          echo "FILES INSIDE DIST"
-          echo "================================"
-          find dist -maxdepth 4 -type f -print 2>/dev/null || true
+          echo "SUCCESS: GitHub Pages site prepared."
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -67,7 +118,7 @@ jobs:
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: ./dist/client
+          path: ./site
 
   deploy:
     needs: build
