@@ -35,14 +35,14 @@ export const EVENTS: EventEntry[] = RAW.map((r, i) => ({
   id: `event-${r.index}`,
   index: r.index,
   title: r.title ?? "EVENT NAME",
-  kind: r.kind ?? ["QUIZ", "STAGE", "SOLO", "SQUAD", "OPEN", "FINALE"][i % 6],
+  kind: r.kind ?? ["QUIZ", "STAGE", "SOLO", "SQUAD", "OPEN", "FINALE"][i % 6]!,
   blurb:
     r.blurb ??
     "Placeholder description. Swap this line for the real brief — rules, format, and what a team needs to bring with them.",
   when: r.when ?? `DAY ${((i % 3) + 1).toString().padStart(2, "0")} · ${9 + (i % 8)}:30`,
   where: r.where ?? `VENUE ${String.fromCharCode(65 + (i % 5))}`,
   cta: r.cta ?? "REGISTER",
-  accent: r.accent ?? ACCENTS[i % ACCENTS.length],
+  accent: r.accent ?? ACCENTS[i % ACCENTS.length]!,
   prop: r.prop ?? i % 6,
 }));
 
