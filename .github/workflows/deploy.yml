@@ -32,85 +32,30 @@ jobs:
       - name: Build
         run: bun run build
 
-      - name: Prepare GitHub Pages site
-        shell: bash
+      - name: Prepare GitHub Pages
         run: |
           set -e
-
-          echo "Searching for browser output..."
 
           rm -rf site
           mkdir -p site
 
-          # Look for the normal Vite/TanStack output first.
-          if [ -d "dist" ]; then
-            echo "Found dist/"
-            cp -R dist/. site/
-          elif [ -d ".output/public" ]; then
-            echo "Found .output/public/"
-            cp -R .output/public/. site/
-          else
-            echo "No standard output directory found."
-            echo ""
-            echo "Searching for index.html and _shell.html..."
-            
-            FOUND_FILE=""
+          cp -R .output/public/. site/
 
-            FOUND_FILE=$(find . \
-              -type f \
-              \( -name "index.html" -o -name "_shell.html" \) \
-              -not -path "./node_modules/*" \
-              -not -path "./.git/*" \
-              | head -n 1)
-
-            if [ -z "$FOUND_FILE" ]; then
-              echo "ERROR: Could not find a browser entry file."
-              echo ""
-              echo "Build directory contents:"
-              find . -maxdepth 4 -type f \
-                -not -path "./node_modules/*" \
-                -not -path "./.git/*" \
-                | head -n 300
-              exit 1
-            fi
-
-            echo "Found: $FOUND_FILE"
-
-            FOUND_DIR=$(dirname "$FOUND_FILE")
-            cp -R "$FOUND_DIR"/. site/
-          fi
-
-          # TanStack Start SPA builds can use _shell.html.
-          # GitHub Pages needs index.html as the entry point.
-          if [ ! -f "site/index.html" ] && [ -f "site/_shell.html" ]; then
-            echo "Creating index.html from _shell.html"
+          if [ -f "site/_shell.html" ]; then
             cp site/_shell.html site/index.html
           fi
 
-          # GitHub Pages SPA fallback.
-          if [ -f "site/index.html" ]; then
-            cp site/index.html site/404.html
-          fi
-
-          echo ""
-          echo "================================"
-          echo "FINAL SITE CONTENT"
-          echo "================================"
-          find site -maxdepth 3 -type f -print | head -n 300
-
-          echo ""
-          echo "================================"
-          echo "SITE SIZE"
-          echo "================================"
-          du -sh site
-
           if [ ! -f "site/index.html" ]; then
-            echo "ERROR: site/index.html was not created."
+            echo "ERROR: _shell.html was not generated."
+            echo "Contents of .output/public:"
+            find .output/public -maxdepth 3 -type f -print
             exit 1
           fi
 
-          echo ""
-          echo "SUCCESS: GitHub Pages site prepared."
+          cp site/index.html site/404.html
+
+          echo "GitHub Pages site:"
+          find site -maxdepth 3 -type f -print
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
