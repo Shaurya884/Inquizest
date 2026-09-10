@@ -62,8 +62,8 @@ export function IntroWorld() {
   };
 
   return (
-    <section ref={host} className="relative h-[260vh]" aria-label="Introduction">
-      <div className="sticky top-0 h-screen w-full overflow-hidden bg-ink">
+    <section ref={host} className="relative h-[205vh]" aria-label="Introduction">
+      <div className="world-stage sticky top-0 h-screen w-full overflow-hidden bg-ink">
         <div ref={reg(0)} className="halftone pointer-events-none absolute -inset-[8%] text-paper opacity-[0.06]" />
 
         <div ref={reg(1)} className="pointer-events-none absolute left-[6vw] top-[16vh] h-[26vmin] w-[26vmin] rounded-full opacity-40 blur-3xl" style={{ background: "var(--accent-violet)" }} />
@@ -82,15 +82,14 @@ export function IntroWorld() {
 
         <div ref={reg(4)} className="absolute right-[7vw] top-[30vh] w-[min(30vw,360px)] max-md:hidden">
           <p className="text-[clamp(13px,1.1vw,18px)] leading-relaxed text-paper/60">
-            Twenty events. Two mechanisms. One continuous shot. INQUIZEST 3.0 is a
-            three-day festival of quizzing, invention and nerve — placeholder copy
-            until the real brief lands.
+            A two-day inter-school collision of knowledge, performance, art,
+            technology and nerve at Delhi Public School Shaheedpath, Lucknow.
           </p>
         </div>
 
         <div ref={reg(5)} className="absolute bottom-[12vh] left-[6vw] flex flex-wrap items-end gap-[4vw] font-mono text-[10px] uppercase tracking-[0.4em] text-paper/45">
-          <span><b className="block font-display text-[3vw] tracking-normal text-paper">20</b>events</span>
-          <span><b className="block font-display text-[3vw] tracking-normal text-paper">03</b>days</span>
+          <span><b className="block font-display text-[3vw] tracking-normal text-paper">26</b>events</span>
+          <span><b className="block font-display text-[3vw] tracking-normal text-paper">02</b>days</span>
           <span><b className="block font-display text-[3vw] tracking-normal text-paper">02</b>systems</span>
         </div>
 

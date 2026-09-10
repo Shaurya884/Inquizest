@@ -99,8 +99,8 @@ export function OpeningSequence() {
   }, []);
 
   return (
-    <section ref={host} className="relative h-[520vh]" aria-label="INQUIZEST 3.0 opening">
-      <div className="sticky top-0 h-screen w-full overflow-hidden bg-ink">
+    <section ref={host} className="relative h-[390vh]" aria-label="INQUIZEST 3.0 opening">
+      <div className="world-stage sticky top-0 h-screen w-full overflow-hidden bg-ink">
         {/* 2 · white field */}
         <div ref={glow} className="pointer-events-none absolute left-1/2 top-1/2 h-[70vmin] w-[70vmin] -translate-x-1/2 -translate-y-1/2 rounded-full bg-paper/25 blur-[90px]" />
         <div ref={white} className="absolute inset-0 bg-paper will-change-[clip-path]">
@@ -152,8 +152,8 @@ export function OpeningSequence() {
           ref={meta}
           className="pointer-events-none absolute bottom-[9vh] left-0 right-0 flex justify-between px-[6vw] font-mono text-[10px] uppercase tracking-[0.4em] text-paper/55 opacity-0"
         >
-          <span>20 events · one universe</span>
-          <span>keep scrolling</span>
+          <span>3rd edition · Delhi Public School Shaheedpath</span>
+          <span>5—6 October 2026</span>
         </div>
 
         <div

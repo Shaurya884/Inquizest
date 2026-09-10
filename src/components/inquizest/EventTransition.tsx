@@ -47,22 +47,22 @@ export function EventTransition() {
   }, []);
 
   return (
-    <section ref={host} className="relative h-[160vh]" aria-label="Mechanism shift">
-      <div className="sticky top-0 h-screen w-full overflow-hidden bg-ink">
+    <section ref={host} className="relative h-[125vh]" aria-label="Mechanism shift">
+      <div className="world-stage sticky top-0 h-screen w-full overflow-hidden bg-ink">
         <div ref={hintB} className="pointer-events-none absolute left-[-10vw] top-[70vh] h-[90vmax] w-[90vmax] rounded-full opacity-0 blur-[130px]" style={{ background: "radial-gradient(circle, var(--accent-lime), transparent 60%)" }} />
         <div ref={sweep} className="pointer-events-none absolute -inset-y-[20%] left-0 w-[60vw] bg-paper/90 mix-blend-difference" />
         <div className="absolute inset-0 grid place-items-center px-[6vw] text-center">
           <div>
             <div ref={wordA} className="font-display text-[7vw] leading-[0.9] text-paper md:text-[4.4vw]">
-              SYSTEM I · COMPLETE
+              DAY 0 + DAY 1 · COMPLETE
             </div>
             <div ref={wordB} className="mt-[2vh] font-display text-[9vw] leading-[0.88] text-transparent opacity-0 md:text-[5.6vw]" style={{ WebkitTextStroke: "1.6px var(--accent-lime)" }}>
-              SECOND MECHANISM ENGAGED
+              DAY 2 MECHANISM ENGAGED
             </div>
           </div>
         </div>
         <span className="pointer-events-none absolute bottom-[8vh] left-1/2 -translate-x-1/2 font-mono text-[10px] uppercase tracking-[0.5em] text-paper/40">
-          events 11 — 20
+          events 17 — 26
         </span>
       </div>
     </section>

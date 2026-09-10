@@ -171,6 +171,32 @@
   background-size: 7px 7px;
 }
 
+@utility world-stage {
+  isolation: isolate;
+}
+
+@layer components {
+  .world-stage::before,
+  .world-stage::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    z-index: 60;
+    height: 18vh;
+    pointer-events: none;
+  }
+
+  .world-stage::before {
+    top: 0;
+    background: linear-gradient(to bottom, var(--ink), transparent);
+  }
+
+  .world-stage::after {
+    bottom: 0;
+    background: linear-gradient(to top, var(--ink), transparent);
+  }
+}
+
 @layer base {
   html {
     background-color: var(--ink);

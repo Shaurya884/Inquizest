@@ -42,7 +42,7 @@ function Inquizest() {
     gsap.registerPlugin(ScrollTrigger);
     if (prefersReducedMotion()) return;
 
-    const lenis = new Lenis({ duration: 1.25, wheelMultiplier: 0.9 });
+    const lenis = new Lenis({ duration: 0.92, wheelMultiplier: 1.08 });
     lenis.on("scroll", ScrollTrigger.update);
     const tick = (time: number) => lenis.raf(time * 1000);
     gsap.ticker.add(tick);
@@ -56,7 +56,7 @@ function Inquizest() {
 
   return (
     <main className="relative bg-ink">
-      <h1 className="sr-only">INQUIZEST 3.0 — 20 events across two mechanisms</h1>
+      <h1 className="sr-only">INQUIZEST 3.0 — 26 events across two mechanisms</h1>
       <OpeningSequence />
       <IntroWorld />
       <RadialEventWorld id="wheel-a" events={EVENTS_A} config={WHEEL_A} />
