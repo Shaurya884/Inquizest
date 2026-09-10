@@ -60,7 +60,7 @@ export function RadialEventWorld({
   const parallax = useRef<HTMLDivElement>(null);
 
   const n = events.length;
-  const heights = useMemo(() => `${n * 105 + 60}vh`, [n]);
+  const heights = useMemo(() => `${n * 72 + 48}vh`, [n]);
 
   useEffect(() => {
     const el = host.current;
@@ -170,7 +170,7 @@ export function RadialEventWorld({
 
   return (
     <section ref={host} style={{ height: heights }} className="relative" aria-label={`Events ${events[0]!.index} to ${events[n - 1]!.index}`}>
-      <div className="sticky top-0 h-screen w-full overflow-hidden bg-ink">
+      <div className="world-stage sticky top-0 h-screen w-full overflow-hidden bg-ink">
         {/* mechanism traces — never a visible circumference */}
         <div ref={halo} className="pointer-events-none absolute h-[120vmax] w-[120vmax] rounded-full opacity-[0.1] blur-[120px]" style={{ background: "radial-gradient(circle, var(--accent-cyan), transparent 62%)" }} />
         <div ref={spokes} className="pointer-events-none absolute origin-center opacity-[0.16]">
@@ -234,26 +234,14 @@ function EventComposition({ event }: { event: EventEntry }) {
         </h2>
         <div className="mt-[2vh] flex max-w-[34ch] flex-col gap-[1.6vh]">
           <p className="text-[clamp(13px,1.05vw,17px)] leading-relaxed text-paper/60">{event.blurb}</p>
-          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-[10px] uppercase tracking-[0.32em] text-paper/45">
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-2 font-mono text-[10px] uppercase tracking-[0.24em] text-paper/45">
             <span>{event.when}</span>
             <span>{event.where}</span>
           </div>
-          <button
-            type="button"
-            className="group mt-[0.6vh] inline-flex w-fit items-center gap-3 border border-paper/25 px-5 py-2 font-mono text-[10px] uppercase tracking-[0.4em] text-paper transition-colors hover:border-transparent"
-            style={{ backgroundColor: "transparent" }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = accent;
-              e.currentTarget.style.color = "var(--ink)";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = "transparent";
-              e.currentTarget.style.color = "var(--paper)";
-            }}
-          >
-            {event.cta}
-            <span aria-hidden>→</span>
-          </button>
+          <div className="flex w-fit divide-x divide-paper/20 border-y border-paper/20 font-mono text-[9px] uppercase tracking-[0.24em] text-paper/65">
+            <span className="py-2 pr-4">classes {event.classes}</span>
+            <span className="py-2 pl-4">{event.participants} participant{event.participants === "1" ? "" : "s"}</span>
+          </div>
         </div>
       </div>
     </article>
